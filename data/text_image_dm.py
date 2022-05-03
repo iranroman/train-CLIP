@@ -107,10 +107,6 @@ class TextImageDataset(Dataset):
         # find the action in the timestamp
         descriptions = [a for (st,et,a) in self.timed_actions[video_idx] if time > st and time < et]
         description = choice(descriptions) if len(descriptions) > 0 else 'unspecified'
-        except IndexError as zero_captions_in_file_ex:
-            print(f"An exception occurred trying to load file {text_file}.")
-            print(f"Skipping index {ind}")
-            return self.skip_sample(ind)
 
         tokenized_text = description if self.custom_tokenizer else clip.tokenize(description)[0]
 
