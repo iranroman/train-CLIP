@@ -70,7 +70,7 @@ class TextImageDataset(Dataset):
         video_ids = [os.path.basename(f).stem for f in self.video_files]
         with open(folder) as f:
             reader = csv.reader(f, delimiter=',')
-            timed_actions = [[row[4], row[5], row[8] for row in reader if row[2]==video_id] for video_id in video_ids]
+            timed_actions = [[[row[4], row[5], row[8]] for row in reader if row[2]==video_id] for video_id in video_ids]
         return timed_actions
 
     def fix_img(self, img): # channel conversion if needed
