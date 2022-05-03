@@ -67,7 +67,7 @@ class TextImageDataset(Dataset):
         return self.total_frames
 
     def load_timestamped_actions(self, folder):
-        video_ids = [os.path.basename(f).stem for f in ]
+        video_ids = [os.path.basename(f).stem for f in self.video_files]
         with open(folder) as f:
             reader = csv.reader(f, delimiter=',')
             timed_actions = [[row[4], row[5], row[8] for row in reader if row[2]==video_id] for video_id in video_ids]
