@@ -7,6 +7,7 @@ import argparse
 import clip
 import torch
 import csv
+import numpy as np
 
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms as T
