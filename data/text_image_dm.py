@@ -123,6 +123,7 @@ class TextImageDataset(Dataset):
 class TextImageDataModule(LightningDataModule):
     def __init__(self,
                  folder: str,
+                 annotation_file: str,
                  batch_size: int,
                  num_workers=0,
                  image_size=224,
