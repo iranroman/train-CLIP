@@ -143,6 +143,7 @@ class TextImageDataModule(LightningDataModule):
         """
         super().__init__()
         self.folder =folder
+        self.annotation_file = annotation_file
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.image_size = image_size
@@ -154,6 +155,7 @@ class TextImageDataModule(LightningDataModule):
     def add_argparse_args(parent_parser):
         parser = argparse.ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument('--folder', type=str, required=True, help='directory of your training folder')
+        parser.add_argument('--annotation_file', type=str, required=True, help='directory of your training folder')
         parser.add_argument('--batch_size', type=int, help='size of the batch')
         parser.add_argument('--num_workers', type=int, default=0, help='number of workers for the dataloaders')
         parser.add_argument('--image_size', type=int, default=224, help='size of the images')
@@ -162,7 +164,7 @@ class TextImageDataModule(LightningDataModule):
         return parser
     
     def setup(self, stage=None):
-        self.dataset = TextImageDataset(self.folder, image_size=self.image_size, resize_ratio=self.resize_ratio, shuffle=self.shuffle, custom_tokenizer=not self.custom_tokenizer is None)
+        self.dataset = TextImageDataset(self.folder, self.annotation_file, image_size=self.image_size, resize_ratio=self.resize_ratio, shuffle=self.shuffle, custom_tokenizer=not self.custom_tokenizer is None)
     
     def train_dataloader(self):
         return DataLoader(self.dataset, batch_size=self.batch_size, shuffle=self.shuffle, num_workers=self.num_workers, drop_last=True , collate_fn=self.dl_collate_fn)
