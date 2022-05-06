@@ -43,7 +43,7 @@ class TextImageDataset(Dataset):
         path = Path(folder)
 
         self.video_files = [*path.glob('**/*.MP4')]
-        self.total_frames_per_video =  {video:np.floor(VideoReader(video,'video').get_metadata()['video']['duration'])*self.frame_rate for video in self.video_files}
+        self.total_frames_per_video =  {video:np.floor(VideoReader(str(video),'video').get_metadata()['video']['duration'])*self.frame_rate for video in self.video_files}
         self.total_frames = np.sum(list(self.total_frames_per_video.values())) * self.frame_rate
         self.cumsum_of_frames_per_video = np.cumsum(self.total_frames_per_video)
 
@@ -98,7 +98,7 @@ class TextImageDataset(Dataset):
         time = frames_modulus / self.frame_rate + np.random.uniform(low=-0.1, high=1.0)
     
         # load the video
-        video = VideoReader(video_path, 'video')
+        video = VideoReader(str(video_id), 'video')
         video.set_current_stream("video")
         
         frame = video.seek(time).next()
