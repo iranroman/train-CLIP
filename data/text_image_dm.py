@@ -62,7 +62,7 @@ class TextImageDataset(Dataset):
         self.custom_tokenizer = custom_tokenizer
 
         # the actions and timestamps per video
-        self.timed_actions = load_timestamped_actions(annotation_file)
+        self.timed_actions = self.load_timestamped_actions(annotation_file)
 
     def __len__(self):
         return self.total_frames
